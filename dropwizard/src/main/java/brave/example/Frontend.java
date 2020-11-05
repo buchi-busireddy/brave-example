@@ -1,6 +1,7 @@
 package brave.example;
 
-import io.dropwizard.client.JerseyClientBuilder;
+import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
+import com.smoketurner.dropwizard.zipkin.client.ZipkinClientBuilder;
 import io.dropwizard.setup.Environment;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -32,11 +33,16 @@ public class Frontend extends ExampleApplication<FrontendConfiguration> {
   @Override public void run(FrontendConfiguration configuration, Environment environment) {
     super.run(configuration, environment);
 
-    final Client client = new JerseyClientBuilder(environment).using(configuration.getBackend().getJerseyClientConfiguration())
-        .build(getName());
+    Client client = new ZipkinClientBuilder(environment, zipkinBundle.getHttpTracing().get())
+        .build(configuration.getBackend());
+
     Resource resource = new Resource(client, configuration.getBackend().getEndpoint());
 
     environment.jersey().register(resource);
+  }
+
+  @Override ZipkinFactory zipkinFactory(FrontendConfiguration configuration) {
+    return configuration.getZipkin();
   }
 
   public static void main(String[] args) throws Exception {

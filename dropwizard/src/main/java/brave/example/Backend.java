@@ -1,5 +1,6 @@
 package brave.example;
 
+import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
 import io.dropwizard.setup.Environment;
 import java.util.Date;
 import javax.ws.rs.GET;
@@ -28,6 +29,10 @@ public class Backend extends ExampleApplication<BackendConfiguration> {
   @Override public void run(BackendConfiguration configuration, Environment environment) {
     super.run(configuration, environment);
     environment.jersey().register(new Resource());
+  }
+
+  @Override ZipkinFactory zipkinFactory(BackendConfiguration configuration) {
+    return configuration.getZipkin();
   }
 
   public static void main(String[] args) throws Exception {
