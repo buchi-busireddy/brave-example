@@ -19,22 +19,18 @@
   <properties>
     <jre.version>15</jre.version>
     <maven.compiler.release>8</maven.compiler.release>
-
-    <!-- You don't have to add a dependency on Dropwizard because dropwizard-zipkin manages it -->
-    <dropwizard-zipkin.version>2.0.12-1</dropwizard-zipkin.version>
   </properties>
 
   <dependencies>
-    <!-- Instruments the underlying Dropwizard requests -->
     <dependency>
-      <groupId>com.smoketurner.dropwizard</groupId>
-      <artifactId>zipkin-core</artifactId>
-      <version>${dropwizard-zipkin.version}</version>
+      <groupId>io.dropwizard</groupId>
+      <artifactId>dropwizard-core</artifactId>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
-      <groupId>com.smoketurner.dropwizard</groupId>
-      <artifactId>zipkin-client</artifactId>
-      <version>${dropwizard-zipkin.version}</version>
+      <groupId>io.dropwizard</groupId>
+      <artifactId>dropwizard-client</artifactId>
+      <version>2.0.0</version>
     </dependency>
   </dependencies>
 </project>
